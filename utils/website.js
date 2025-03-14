@@ -4,7 +4,7 @@ const { log } = require("./logger");
 
 const website = {
     getMonthlyAverage: async function(charTag) {
-        let posts = await getPostsBeforeLimit(charTag, "1month");
+        let posts = await website.getPostsBeforeLimit(charTag, "1month");
         if (posts.length === 0) return 5; // minimum of 5
 
         let totalScore = 0;

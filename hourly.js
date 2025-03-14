@@ -67,7 +67,10 @@ async function delay(timeout) {
 }
 
 client.on("messageCreate", async (message) => {
-    if (message.content.includes("Website link")) {
+    if (
+        message.content.includes("Website link")
+        && message.author.id === client.user.id
+    ) {
 
         const websiteLink = message.content.slice(
             15,
