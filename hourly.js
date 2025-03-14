@@ -1,12 +1,12 @@
 require("dotenv").config();
 const { log, client } = require("./utils/logger");
-const { getPostsBeforeLimit, getImageSize, postHasBannedTags, getAllPostData } = require("./utils/website");
+const website = require("./utils/website");
 const database = require("./utils/database");
 
 const { ChannelType } = require("discord.js");
 const moment = require("moment/moment");
 
-// Handle errors to not make the batch file stop
+// Catch errors to not make batch files stop
 process.on('uncaughtException', (err) => {
     console.error('Uncaught Exception:', err);
     lowConnection = true;
@@ -19,7 +19,6 @@ process.on('unhandledRejection', (reason, promise) => {
 
 let lowConnection;
 let sentPosts;
-// Stuff to do on load
 client.on("ready", async() => {
     const server = client.guilds.cache.get(process.env.SERVERID)
     await log("Hourly score checks:");
@@ -39,13 +38,13 @@ client.on("ready", async() => {
         await log(`Trying to get posts in the last week for ${char.channelName}...`);
 
         try {
-            const posts = await getPostsBeforeLimit(char.tag, `1week score:>=${char.monthlyAvg}`);
+            const posts = await website.getPostsBeforeLimit(char.tag, `1week score:>=${char.monthlyAvg}`);
             await log(`Number of good ${char.channelName} posts: ${posts.length}`);
 
             for (let post of posts) {
                 try {
-                    if (!sentPosts.includes(post.id) && !await postHasBannedTags(post)) {
-                        post = await getAllPostData(post.id, char.tag);
+                    if (!sentPosts.includes(post.id) && !await website.postHasBannedTags(post)) {
+                        post = await website.getAllPostData(post.id, char.tag);
 
                         await sendPost(post, char.channelName);
                     }
@@ -110,7 +109,7 @@ async function sendPost(post, channelName) {
     let sentMessage;
 
     // Handle discord's 10MB upload limit
-    const imageSize = await getImageSize(post.imageUrl)
+    const imageSize = await website.getImageSize(post.imageUrl)
 
     if (imageSize < 10485760) {
         await log(`Sending ${post.id} in #${channelName} using a ${imageSize} byte attachment`);
