@@ -14,12 +14,12 @@ async function findChannel(tag) {
     );
 }
 
+let channel;
 async function log(message) {
     console.log(message);
-    let channel = await findChannel("botlogs");
-    if (channel) {
-        await channel.send(message);
-    }
+    if (!channel)
+        channel = await findChannel(process.env.LOGCHANNEL);
+    await channel.send(message);
 }
 
 module.exports = { log, client };
