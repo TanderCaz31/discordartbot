@@ -27,7 +27,7 @@ async function deleteOldPosts() {
 
     const oldPosts = await database.getOldPosts(timeLimit);
 
-    if (oldPosts && oldPosts.length > 0) {
+    if (oldPosts?.length) {
         await database.deletePostsArr(oldPosts);
         await log(`Deleted ${oldPosts.length} old posts`)
     } else {
