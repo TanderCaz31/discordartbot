@@ -16,6 +16,7 @@ The messages sent by the bot **choose dynamically** whether to use an attachment
 
 The silver lining is: an image sent with a directly uploaded attachment shows up **larger** on the Discord app, it's for this reason that the bot attempts to use an attachment when it can.
 
+
 ## Uploading Images Yourself?
 If the image is smaller than 10MB in size, the bot will attempt ot upload it using your internet connection.
 
