@@ -1,7 +1,6 @@
 require("dotenv").config();
 const { log, client } = require("./utils/logger");
 const database = require("./utils/database");
-
 const moment = require("moment");
 
 // Stuff to do on load

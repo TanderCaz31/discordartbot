@@ -2,8 +2,7 @@ require("dotenv").config();
 const { log, client } = require("./utils/logger");
 const website = require("./utils/website");
 const database = require("./utils/database");
-
-const { ChannelType } = require("discord.js");
+const ChannelType = require("discord.js");
 const moment = require("moment/moment");
 
 // Catch errors to not make batch files stop
