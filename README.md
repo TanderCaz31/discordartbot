@@ -11,11 +11,10 @@ In the hourly script, this monthly average is used to search posts with matching
 
 This gives us a metric to judge the performance and perceived **quality** of each image on the site: filtering out low-quality images, without flooding each channel with images.
 
-### High Quality Images, too
+#### High Quality Images, too
 The messages sent by the bot **choose dynamically** whether to use an attachment to upload the image or to let the website's link embed instead. This is done to deal with discord's 10MB upload limit.
 
 The silver lining is: an image sent with a directly uploaded attachment shows up **larger** on the Discord app, it's for this reason that the bot attempts to use an attachment when it can.
-
 
 ## Uploading Images Yourself?
 If the image is smaller than 10MB in size, the bot will attempt ot upload it using your internet connection.
