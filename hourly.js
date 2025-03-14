@@ -1,7 +1,7 @@
 require("dotenv").config();
-const { log, client } = require("./logger");
-const { getPostsBeforeLimit, getImageSize, postHasBannedTags, getAllPostData } = require("./website");
-const database = require("./database");
+const { log, client } = require("./utils/logger");
+const { getPostsBeforeLimit, getImageSize, postHasBannedTags, getAllPostData } = require("./utils/website");
+const database = require("./utils/database");
 
 const { ChannelType } = require("discord.js");
 const moment = require("moment/moment");

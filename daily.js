@@ -1,6 +1,6 @@
 require("dotenv").config();
-const { log, client } = require("./logger");
-const database = require("./database");
+const { log, client } = require("./utils/logger");
+const database = require("./utils/database");
 
 const moment = require("moment");
 
