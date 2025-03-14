@@ -1,0 +1,6 @@
+.idea/
+.node_modules/
+.env
+posts.sqlite
+run daily.bat
+run hourly.bat
