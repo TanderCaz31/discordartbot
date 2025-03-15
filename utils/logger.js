@@ -18,7 +18,7 @@ let channel;
 async function log(message) {
     console.log(message);
     if (!channel)
-        channel = await findChannel(process.env.LOGCHANNEL);
+        channel = await findChannel(process.env.LOGCHANNELNAME);
     await channel.send(message);
 }
 
