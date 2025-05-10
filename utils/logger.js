@@ -8,17 +8,16 @@ const client = new Client({
     ]
 });
 
-async function findChannel(tag) {
-    return client.channels.cache.find(
-        (ch) => ch.name === tag && ch.isTextBased()
-    );
-}
-
 let channel;
+
+client.once('ready', () => {
+    channel = client.channels.cache.find(
+        (ch) => ch.name === process.env.LOGCHANNELNAME && ch.isTextBased()
+    );
+});
+
 async function log(message) {
     console.log(message);
-    if (!channel)
-        channel = await findChannel(process.env.LOGCHANNELNAME);
     await channel.send(message);
 }
 

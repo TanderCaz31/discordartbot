@@ -2,9 +2,9 @@ const axios = require("axios");
 require("dotenv").config();
 const { log } = require("./logger");
 
-const website = {
+const web = {
     getMonthlyAverage: async function(charTag) {
-        let posts = await website.getPostsBeforeLimit(charTag, "1month");
+        let posts = await web.getPostsBeforeLimit(charTag, "1month");
         if (posts.length === 0) return 8; // minimum of 8
 
         let totalScore = 0;
@@ -21,17 +21,14 @@ const website = {
     getPostsBeforeLimit: async function(charTag, limit) {
         let page = 1;
         let posts = [];
+        let webpage;
 
         do {
             await delay();
-            let webpage = await axios.get(`https://safebooru.donmai.us/posts?page=${page}&tags=${charTag}+age%3A..${limit}`);
-            page++;
+            webpage = await axios.get(`https://safebooru.donmai.us/posts?page=${page++}&tags=${charTag}+age%3A..${limit}`);
 
-            if (webpage.data.includes("No posts found.")) {
-                break;
-            }
-            posts = posts.concat(await website.getPostData(webpage))
-        } while (true);
+            posts = posts.concat(await web.getPostData(webpage))
+        } while (webpage.data.includes('<a class="paginator-next"'));
 
         return posts;
     },
@@ -100,4 +97,4 @@ async function delay() {
     return new Promise(resolve => setTimeout(resolve, 500));
 }
 
-module.exports = website;
+module.exports = web;

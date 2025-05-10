@@ -1,6 +1,6 @@
 require("dotenv").config();
 const { log, client } = require("./utils/logger");
-const website = require("./utils/website");
+const web = require("./utils/website");
 const database = require("./utils/database");
 const ChannelType = require("discord.js");
 const moment = require("moment/moment");
@@ -37,13 +37,13 @@ client.on("ready", async() => {
         await log(`Trying to get posts in the last week for ${char.channelName}...`);
 
         try {
-            const posts = await website.getPostsBeforeLimit(char.tag, `1week score:>=${char.monthlyAvg}`);
+            const posts = await web.getPostsBeforeLimit(char.tag, `1week+score:>=${char.monthlyAvg}`);
             await log(`Number of good ${char.channelName} posts: ${posts.length}`);
 
             for (let post of posts) {
                 try {
-                    if (!sentPosts.includes(post.id) && !await website.postHasBannedTags(post)) {
-                        post = await website.getAllPostData(post.id, char.tag);
+                    if (!sentPosts.includes(post.id) && !await web.postHasBannedTags(post)) {
+                        post = await web.getAllPostData(post.id, char.tag);
 
                         await sendPost(post, char.channelName);
                     }
@@ -96,7 +96,7 @@ client.on("messageCreate", async (message) => {
 async function findChannel(tag) {
     return client.channels.cache.find(
         (ch) => ch.name === tag && ch.isTextBased()
-    )
+    );
 }
 
 async function createChannel(server, channelName) {
@@ -111,7 +111,7 @@ async function sendPost(post, channelName) {
     let sentMessage;
 
     // Handle discord's 10MB upload limit
-    const imageSize = await website.getImageSize(post.imageUrl)
+    const imageSize = await web.getImageSize(post.imageUrl)
 
     if (imageSize < 10485760) {
         await log(`Sending ${post.id} in #${channelName} using a ${imageSize} byte attachment`);
@@ -130,7 +130,6 @@ async function sendPost(post, channelName) {
     await database.addPost(post);
 
     if (["gotoh_hitori", "nachoneko"].includes(post.char)) {
-        await log("Trying to heart the message i just sent...");
         await sentMessage.react('❤️');
     }
 }
