@@ -12,8 +12,8 @@ const web = {
             totalScore += post.score;
         }
 
-        // At 320 posts in the last month, will give a 1.3x boost to the threshold to pass before posting
-        const multiplier = 1.0 + (posts.length / 320) * 0.3;
+        // At 320 posts in the last month, will give a 1.5x boost to the threshold to pass before posting
+        const multiplier = 1.0 + (posts.length / 320) * 0.5;
         return Math.floor(multiplier * totalScore / posts.length);
     },
 
